@@ -1,6 +1,7 @@
 "use client"
 
 import { authClient } from "@/lib/auth-client" // import the auth client
+import Link from "next/link";
 import { useRouter } from "next/navigation"
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -50,8 +51,12 @@ export default function DashboardComponent(){
                         Email: 
                         {session?.user.email}
                     </p>
+
+                    <Link href={"/admin/dashboard/cardapio"} className="text-blue-800">
+                        cardapio
+                    </Link>
                 </div>
             )}
         </main>
-    )
+    );
 }

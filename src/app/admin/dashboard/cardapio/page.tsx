@@ -1,7 +1,9 @@
+import { CadastroCardapio } from "@/components/commun/dashboard/cardapio";
+
 const Cardapio = () => {
     return ( 
         <>
-            <h1>Cardapio</h1>
+            <CadastroCardapio />
         </>
     );
 }
