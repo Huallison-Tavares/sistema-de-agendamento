@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Plus} from "lucide-react";
 import Products from "./components/products";
-import HeaderCardapio from "./components/header";
+import HeaderCardapio from "./components/category";
 import { getCardapio } from "@/db/queries/cardapio";
 import GroupAdditional from "./components/group-additional";
 import { MenuType } from "@/types/menu";
@@ -27,7 +27,7 @@ export function CadastroCardapio() {
     loadData();
   }, []);
 
-  const [showCategoryForm, setShowCategoryForm] = useState(false)
+  const [showCategoryForm, setShowCategoryForm] = useState(false);
   
   return (
     <div className="p-4 space-y-6">

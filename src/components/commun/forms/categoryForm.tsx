@@ -13,13 +13,13 @@ import {
   FieldGroup,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { GripVertical, Layers } from "lucide-react"
+import { Check, GripVertical, Layers, X } from "lucide-react"
 import { AccordionTrigger } from "@/components/ui/accordion"
 import { toast } from "sonner"
 import { setCategory } from "@/db/queries/category"
-import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
 import { MenuType } from "@/types/menu"
+import { Button } from "@/components/ui/button"
 
 const formSchema = z.object({
   name: z
@@ -38,15 +38,18 @@ export function CategoryForm({
   setMenu,
   setShowCategoryForm
 }: CategoryFormProps) {
-  const router = useRouter();
-
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
         name: ""
     },
     mode: "all"
-  })
+  });
+
+  const closeCategoryForm = () => {
+    setShowCategoryForm(false);
+    form.reset();
+  }
 
   async function onSubmit(data: FormSchemaType) {
     try{
@@ -60,8 +63,9 @@ export function CategoryForm({
           products: [],
         }
       ]);
-      setShowCategoryForm(false);
-      form.reset();
+      
+      closeCategoryForm();
+
       toast.success("Categoria criada com sucesso.", {
           position: "top-right"
       });
@@ -71,7 +75,7 @@ export function CategoryForm({
   }
 
   return (
-    <Card className="w-full sm:max-w-md p-0">
+    <Card className="w-full p-0">
       <CardContent>
         <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
@@ -82,12 +86,13 @@ export function CategoryForm({
                 <Field data-invalid={fieldState.invalid}>
                   <div className="flex items-center gap-2">
                       <GripVertical className="text-muted-foreground" size={18} />
-                      <AccordionTrigger className="hover:no-underline">
-                          <div className="flex items-center gap-3">
-                              <div className="bg-red-100 p-2 rounded-lg text-red-600">
-                                  <Layers size={20} />
-                              </div>
-                              <div className="flex flex-col items-start">
+                      <AccordionTrigger className="hover:no-underline" asChild>
+                          <div className="flex items-center! justify-start gap-3">
+                            <div className="bg-red-100 p-2 rounded-lg text-red-600">
+                                <Layers size={20} />
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <div className="flex flex-col">
                                   <Input
                                       {...field}
                                       id="form-rhf-demo-title"
@@ -96,15 +101,21 @@ export function CategoryForm({
                                       autoComplete="on"
                                       type="text"
                                       className="text-xl font-bold text-gray-800"
-                                      onBlur={(e) => {
-                                          field.onBlur(); // Avisa o RHF que o campo perdeu o foco
-                                          form.handleSubmit(onSubmit)(); // Dispara a função de submit
-                                      }}
                                   />
                                   {fieldState.invalid && (
                                       <FieldError errors={[fieldState.error]} />
                                   )}
-                              </div>
+                                </div>
+
+                                <div className="flex">
+                                  <Button size="icon" variant="ghost" className="h-8 w-8 text-green-600 cursor-pointer" type="submit">
+                                      <Check size={16} />
+                                  </Button>
+                                  <Button size="icon" variant="ghost" className="h-8 w-8 text-red-600 cursor-pointer" onClick={() => closeCategoryForm()}>
+                                      <X size={16} />
+                                  </Button>
+                                </div>
+                            </div>
                           </div>
                       </AccordionTrigger>
                   </div>

@@ -22,9 +22,21 @@ export const deleteCategory = async(id: string) => {
         await db.delete(categoryTable)
         .where(eq(categoryTable.id, id));
         
-
         return { success: true };
     } catch (error) {
+        console.error("Erro ao deletar categoria:", error);
+        return { success: false, error: "Não foi possível deletar a categoria." };
+    }
+}
+
+export const updateCategory = async(id: string, newName: string) => {
+    try {
+        await db.update(categoryTable)
+        .set({ name: newName })
+        .where(eq(categoryTable.id, id));
+
+        return { success: true };
+    } catch(error) {
         console.error("Erro ao deletar categoria:", error);
         return { success: false, error: "Não foi possível deletar a categoria." };
     }
