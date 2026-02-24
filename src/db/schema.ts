@@ -52,7 +52,7 @@ export const productTable = pgTable("products", {
   categoryId: uuid("category_id")
     .notNull()
     .references(() => categoryTable.id),
-  imageUrl: text("image_url").notNull(),
+  imageUrl: text("image_url"),
 });
 
 export const productRelations = relations(productTable, ({ one, many }) => ({
@@ -70,7 +70,7 @@ export const groupOfAdditionalTable = pgTable("group_of_additional", {
   min: integer().default(0),
   max: integer(),
   isRequired: boolean("is_required").notNull(),
-  imageUrl: text("image_url").notNull(),
+  imageUrl: text("image_url"),
   productId: uuid("product_id")
     .notNull()
     .references(() => productTable.id),
@@ -92,12 +92,10 @@ export const additionalTable = pgTable("additionals", {
   name: text().notNull(),
   priceInCents: integer("price_in_cents").notNull(),
   groupOfAdditionalId: uuid("group_of_additional_id")
-    .notNull()
     .references(() => groupOfAdditionalTable.id),
   productId: uuid("product_id")
-    .notNull()
     .references(() => productTable.id),
-  imageUrl: text("image_url").notNull(),
+  imageUrl: text("image_url"),
 });
 
 export const additionalRelations = relations(additionalTable, ({ one }) => ({

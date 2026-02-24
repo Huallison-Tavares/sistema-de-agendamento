@@ -1,29 +1,38 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Plus } from "lucide-react";
+import { Plus, UtensilsCrossed } from "lucide-react";
 import Additional from "../additional";
+import { groupOfAdditionalType } from "@/types/menu";
 
-const GroupAdditional = () => {
+interface GroupAdditionalProps {
+    groupAdditional: groupOfAdditionalType[]
+}
+
+const GroupAdditional = ({
+    groupAdditional
+}: GroupAdditionalProps) => {
     return ( 
-        <div className="pl-6 border-l-2 border-red-100 space-y-4">
-            <Card className="p-4 bg-slate-50/50">
-                <div className="flex justify-between items-center mb-4">
-                    <div className="flex gap-2 items-center">
-                        <h4 className="font-semibold text-sm">Escolha sua Carne</h4>
-                        <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Obrigatório</Badge>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            {groupAdditional.map(group => (
+                <Card key={group.id} className="p-4 border-dashed border-2">
+                    <div className="flex justify-between items-center mb-3">
+                        <div className="flex items-center gap-2">
+                            <UtensilsCrossed size={14} className="text-orange-500" />
+                            <h4 className="text-sm font-bold">{group.name}</h4>
+                        </div>
+                        <Badge variant="secondary" className="text-[10px]">{group.isRequired ? "Obrigatoria": "Opcional"}</Badge>
                     </div>
-                    <Button variant="ghost" size="sm" className="text-red-600">+ Opção</Button>
-                </div>
 
-                {/* NÍVEL 3: OS ADICIONAIS EM SI */}
-                <Additional />
-                
-            </Card>
+                    {/* NÍVEL 4: ADICIONAIS (Itens finais) */}
+                    <Additional additionals={group.additional}/>
+                </Card>
+            ))}
 
-            <Button variant="outline" className="w-full border-dashed">
-                <Plus className="mr-2 h-4 w-4" /> Novo Grupo
-            </Button>
+            {/* Botão para novo grupo */}
+            <button className="flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-4 text-muted-foreground hover:bg-white hover:text-red-500 transition-colors">
+                <Plus size={20} />
+                <span className="text-xs font-medium mt-1">Novo Grupo de Adicionais</span>
+            </button>
         </div>
     );
 }

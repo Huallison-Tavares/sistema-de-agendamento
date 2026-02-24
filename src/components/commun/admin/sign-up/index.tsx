@@ -20,13 +20,10 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-  FieldSet,
 } from "@/components/ui/field"
 
 import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
 import { authClient } from "@/lib/auth-client"
-import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   name: z
