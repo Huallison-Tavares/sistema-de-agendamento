@@ -9,8 +9,6 @@ export default function DashboardComponent(){
     const { 
         data: session, 
         isPending, //loading state
-        error, //error object
-        refetch //refetch the session
     } = authClient.useSession();
     
     const router = useRouter();

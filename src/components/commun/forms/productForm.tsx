@@ -36,7 +36,7 @@ interface ProductFormProps {
 
 const formSchema = z.object({
   name: z.string("Nome invalido.").min(1, "O nome é um campo obrigatório."),
-  description: z.string("Descrição invalida").nullable(),
+  description: z.string("Descrição invalida").nullable().optional(),
 });
 
 type FormSchemaType = z.infer<typeof formSchema>;
@@ -64,7 +64,7 @@ export function ProductForm({
       }
 
       const productUpdate: productsTypes = {
-        description: data.description,
+        description: data.description ?? null,
         name: data.name,
         id: product.id,
         categoryId: categoryId,
@@ -89,7 +89,7 @@ export function ProductForm({
         id: crypto.randomUUID(),
         categoryId: categoryId,
         name: data.name,
-        description: data.description,
+        description: data.description ?? null,
         imageUrl: null,
         additional: [],
         groupOfAdditional: []

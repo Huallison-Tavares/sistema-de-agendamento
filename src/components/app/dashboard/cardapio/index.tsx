@@ -46,7 +46,7 @@ export function CadastroCardapio() {
                   <Accordion type="single" collapsible className="ml-6 space-y-3">
                       <Products productName={prod.name} product={prod} setMenu={setMenu}>
                         {/* NÍVEL 3: GRUPOS DE ADICIONAIS (Dentro do Produto) */}
-                        <GroupAdditional groupAdditional={prod.groupOfAdditional} setMenu={setMenu}/>
+                        <GroupAdditional productId={prod.id} groupAdditional={prod.groupOfAdditional} setMenu={setMenu}/>
                       </Products>
                   </Accordion>
                 </React.Fragment>
