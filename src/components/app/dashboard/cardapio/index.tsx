@@ -11,12 +11,14 @@ import Products from "./components/products";
 import HeaderCardapio from "./components/category";
 import { getCardapio } from "@/db/queries/cardapio";
 import GroupAdditional from "./components/group-additional";
-import { MenuType } from "@/types/menu";
+import { MenuType, productsTypes } from "@/types/menu";
 import React, { useEffect, useState } from "react";
-import { CategoryForm } from "../../forms/categoryForm";
+import { CategoryForm } from "../../../commun/forms/categoryForm";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export function CadastroCardapio() {
+  const router = useRouter();
   const [menu, setMenu] = useState<MenuType[]>([]);
   
   useEffect(() => {
@@ -38,18 +40,21 @@ export function CadastroCardapio() {
             <HeaderCardapio categoryId={card.id} categoryName={card.name} countProduct={card.products.length} setMenu={setMenu}/>
 
             <AccordionContent className="pt-2 pb-6 space-y-6">
-              {card.products.map(prod => (
+              {card.products.map((prod: productsTypes) => (
                 <React.Fragment key={prod.id}>
                   {/* NÍVEL 2: PRODUTOS (Dentro da Categoria) */}
                   <Accordion type="single" collapsible className="ml-6 space-y-3">
-                      <Products productName={prod.name}>
+                      <Products productName={prod.name} product={prod} setMenu={setMenu}>
                         {/* NÍVEL 3: GRUPOS DE ADICIONAIS (Dentro do Produto) */}
-                        <GroupAdditional groupAdditional={prod.groupOfAdditional}/>
+                        <GroupAdditional groupAdditional={prod.groupOfAdditional} setMenu={setMenu}/>
                       </Products>
                   </Accordion>
                 </React.Fragment>
               ))}
-              <Button variant="outline" className="w-full ml-6 bg-white border-red-200 text-red-600 hover:bg-red-50">
+              <Button variant="outline" className="w-full ml-6 bg-white border-red-200 text-red-600 hover:bg-red-50 cursor-pointer" onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/admin/dashboard/cardapio/produto?categoryId=${card.id}`);
+              }}>
                 <Plus size={16} className="mr-2" /> Novo Produto em {card.name}
               </Button>
             </AccordionContent>
@@ -69,6 +74,7 @@ export function CadastroCardapio() {
           <Plus size={16} className="mr-2" /> Criar nova Categoria
         </Button>
       </Accordion>
+
     </div>
   );
 }

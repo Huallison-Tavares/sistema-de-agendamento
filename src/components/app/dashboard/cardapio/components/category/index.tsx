@@ -41,7 +41,6 @@ const HeaderCardapio = ({
         }
 
         try {
-            // Chame sua query de update aqui
             await updateCategory(categoryId, newName);
             
             setMenu((prevMenu) => 

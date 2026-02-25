@@ -38,6 +38,6 @@ export const updateCategory = async(id: string, newName: string) => {
         return { success: true };
     } catch(error) {
         console.error("Erro ao deletar categoria:", error);
-        return { success: false, error: "Não foi possível deletar a categoria." };
+        return { success: false, error: "Não foi possível atualizar a categoria." };
     }
 }

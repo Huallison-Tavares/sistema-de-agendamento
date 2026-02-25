@@ -1,4 +1,4 @@
-import { AdminLogin } from "@/components/commun/admin/login";
+import { AdminLogin } from "@/components/app/admin/login";
 
 const Login = () => {
     return (

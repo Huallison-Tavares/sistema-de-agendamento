@@ -1,4 +1,4 @@
-import { CadastroCardapio } from "@/components/commun/dashboard/cardapio";
+import { CadastroCardapio } from "@/components/app/dashboard/cardapio";
 
 const Cardapio = () => {
     return ( 
